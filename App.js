@@ -11,7 +11,7 @@ export default function App() {
   const [password, setPassword] = useState('');
   const [isPending, startTransition] = useTransition();
   
-  const API_URL = "https://railway.app"; // Update after backend deploy
+  const API_URL = "https://shopnest-api-7khf.onrender.com/"; // Update after backend deploy
 
   useEffect(() => {
     fetch(`${API_URL}/api/products`)
