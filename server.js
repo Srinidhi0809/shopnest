@@ -117,3 +117,6 @@ app.post('/api/payment/checkout', verifyToken, async (req, res) => {
 // Server Initialization
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server live on port ${PORT}`));
+app.get('/', (req, res) => {
+    res.send('Backend is running successfully!');
+});
