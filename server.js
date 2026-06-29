@@ -119,4 +119,11 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server live on port ${PORT}`));
 app.get('/', (req, res) => {
     res.send('Backend is running successfully!');
-});
+});// 1. In your backend terminal: npm install cors
+// 2. Add this to your backend server file:
+
+const cors = require('cors');
+
+app.use(cors({
+    origin: 'https://your-website-name.vercel.app' // Put your Vercel URL here
+}));
