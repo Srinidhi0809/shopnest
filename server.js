@@ -10,7 +10,11 @@ const app = express();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Middleware
-app.use(cors());
+// CHANGE THIS: Replace 'https://shopnest-snowy.vercel.app' with your actual Vercel URL if it changes
+app.use(cors({
+  origin: ['https://shopnest-snowy.vercel.app', 'http://localhost:3000'], 
+  credentials: true
+}));
 app.use(express.json());
 
 // MongoDB Connection
@@ -54,6 +58,11 @@ const verifyAdmin = (req, res, next) => {
 
 // --- REST API ENDPOINTS ---
 
+// Root Root for Health Check
+app.get('/', (req, res) => {
+  res.send('Backend is running successfully!');
+});
+
 // Auth Routes
 app.post('/api/auth/register', async (req, res) => {
   try {
@@ -77,7 +86,7 @@ app.post('/api/auth/login', async (req, res) => {
 
 // Catalog Routes
 app.get('/api/products', async (req, res) => {
-  const products = await Product.find().lean(); // .lean() optimizes query speeds
+  const products = await Product.find().lean();
   res.json(products);
 });
 
@@ -117,13 +126,3 @@ app.post('/api/payment/checkout', verifyToken, async (req, res) => {
 // Server Initialization
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server live on port ${PORT}`));
-app.get('/', (req, res) => {
-    res.send('Backend is running successfully!');
-});// 1. In your backend terminal: npm install cors
-// 2. Add this to your backend server file:
-
-const cors = require('cors');
-
-app.use(cors({
-    origin: 'https://your-website-name.vercel.app' // Put your Vercel URL here
-}));
